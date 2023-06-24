@@ -1,0 +1,92 @@
+CREATE TABLE [dbo].[Register] (
+    [UserNo]    INT          IDENTITY (1, 1) NOT NULL,
+    [LoginName] VARCHAR (50) NOT NULL,
+    [FullName]  VARCHAR (50) NOT NULL,
+    [Gender]    VARCHAR (10) NOT NULL,
+    [EmailId]   VARCHAR (50) NOT NULL,
+    [Mobile]    VARCHAR (10) NOT NULL,
+    [Password]  VARCHAR (50) NOT NULL,
+    [DegreeNo]    INT          NOT NULL,
+    PRIMARY KEY CLUSTERED ([UserNo] ASC),
+    UNIQUE NONCLUSTERED ([LoginName] ASC),
+    CONSTRAINT [FK_Register_City] FOREIGN KEY ([DegreeNo]) REFERENCES [dbo].[Degree] ([DegreeNo])
+);
+
+------------------------------------------------
+
+ CREATE TABLE [dbo].[Degree] (
+    [DegreeNo]   INT          NOT NULL,
+    [DegreeName] VARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([DegreeNo] ASC)
+);
+
+
+-------------------------------------------------
+
+ CREATE PROCEDURE [dbo].DeleteUser
+	@UserNo int 
+    
+AS
+	delete Register where UserNo = @UserNo
+
+-------------------------------------------------
+
+
+ CREATE PROCEDURE [dbo].GetAllRegUser
+	
+AS
+	select * from Register
+
+-------------------------------------------------
+
+
+CREATE PROCEDURE [dbo].GetAllRegUserSorted
+	
+AS
+	select * from Register Order By CityNo
+
+-------------------------------------------------
+
+
+CREATE PROCEDURE [dbo].GetLoginUser
+	@LoginName varchar(50),
+	@Password varchar(50)
+AS
+	select * from Register where LoginName=@LoginName and Password =@Password
+
+-------------------------------------------------
+
+ CREATE PROCEDURE [dbo].GetSingleUser
+	@UserNo int 
+AS
+	select * from Register where UserNo=@UserNo
+
+-------------------------------------------------
+
+
+CREATE PROCEDURE [dbo].InsertUser
+	
+	@LoginName varchar(30),
+	@FullName varchar(30),
+	@Gender varchar(30),
+	@EmailId varchar(50),
+	@Mobile varchar(30),
+	@Password varchar(30),
+	@DegreeNo int
+AS
+	insert into Register (LoginName,FullName,Gender,EmailId,Mobile,Password,DegreeNo) values (@LoginName,@FullName,@Gender,@EmailId,@Mobile,@Password,@DegreeNo)
+
+-------------------------------------------------
+
+
+ CREATE PROCEDURE [dbo].UpdateUser
+	@LoginName varchar(50),
+	@FullName varchar(50),
+	@Gender varchar(10),
+	@EmailId varchar(50),
+	@Mobile varchar(10),
+	@Password varchar(50),
+	@DegreeNo int,
+	@UserNo int
+AS
+update Register set LoginName=@LoginName,FullName=@FullName,Gender=@Gender,EmailId=@EmailId,Mobile=@Mobile,Password=@Password,DegreeNo=@DegreeNo where UserNo =@UserNo

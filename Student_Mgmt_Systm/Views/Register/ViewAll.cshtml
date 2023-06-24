@@ -1,0 +1,66 @@
+﻿@model IEnumerable<miniProject.ViewModels.ViewAll>
+
+@{
+    string c = "";
+    }
+<partial name="PartialView"></partial>
+@foreach (var item in Model) 
+{
+    if (!c.Equals(item.DegreeName))
+    {
+        c = item.DegreeName;
+        @item.DegreeName;
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        LoginName
+                    </th>
+                    <th>
+                        FullName
+                    </th>
+                    <th>
+                        Gender
+                    </th>
+                    <th>
+                        EmailId
+                    </th>
+                    <th>
+                        Mobile
+                    </th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                @foreach (var ele in Model)
+                {
+                    if (c.Equals(ele.DegreeName))
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => ele.LoginName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => ele.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => ele.Gender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => ele.EmailId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => ele.Mobile)
+                            </td>
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+    
+    }
+    
+}
